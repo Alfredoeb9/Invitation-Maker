@@ -38,7 +38,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
-    modules: ["src", "node_modules"],
+    modules: ["node_modules"],
   },
   plugins: [
     new CleanWebpackPlugin(),
