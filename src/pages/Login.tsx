@@ -51,7 +51,7 @@ export default function Login() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="max-w-md m-auto"
         >
-          <h1 className="font-bold text-4xl mb-4">Sign up</h1>
+          <h1 className="font-bold text-4xl mb-4">Log In</h1>
 
           <FormField
             control={form.control}
