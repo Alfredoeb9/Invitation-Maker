@@ -14,10 +14,15 @@ import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./pages/SignUp";
 import NotFound from "./NotFound";
 import Login from "./pages/Login";
+import PrivateRoutes from "./components/PrivateRoutes";
+import MyInvitations from "./pages/MyInvitations/MyInvitations";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
+      <Route element={<PrivateRoutes />}>
+        <Route path="/my-invitation" element={<MyInvitations />} />
+      </Route>
       <Route index element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
