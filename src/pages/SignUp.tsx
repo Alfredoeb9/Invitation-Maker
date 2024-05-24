@@ -50,9 +50,6 @@ export default function SignUp() {
     }
   }
 
-  console.log("form", form.formState.errors);
-  console.log("formSchema", formSchema);
-
   return (
     <div>
       <Form {...form}>
@@ -185,7 +182,7 @@ export default function SignUp() {
           <button
             type="submit"
             onClick={form.handleSubmit(onSubmit)}
-            className="mt-4 px-4 py-2 bg-cyan-500 text-white rounded-lg w-full"
+            className="mt-4 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-200 text-white rounded-lg w-full"
           >
             Sign Up
           </button>
