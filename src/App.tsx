@@ -16,14 +16,17 @@ import NotFound from "./NotFound";
 import Login from "./pages/Login";
 import PrivateRoutes from "./components/PrivateRoutes";
 import MyInvitations from "./pages/MyInvitations/MyInvitations";
+import Welcome from "./pages/Welcome";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route element={<PrivateRoutes />}>
+        <Route index element={<Home />} />
         <Route path="/my-invitation" element={<MyInvitations />} />
       </Route>
-      <Route index element={<Home />} />
+
+      <Route path="/welcome" element={<Welcome />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
