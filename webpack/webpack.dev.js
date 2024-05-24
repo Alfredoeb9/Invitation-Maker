@@ -9,7 +9,7 @@ module.exports = merge(common, {
   devtool: "eval-cheap-source-map",
   plugins: [
     new Dotenv({
-      path: path.resolve(process.cwd(), ".env.dev"),
+      path: path.resolve(process.cwd(), ".env"),
       safe: true,
     }),
   ],
