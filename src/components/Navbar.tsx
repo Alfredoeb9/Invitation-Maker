@@ -1,7 +1,10 @@
 import React from "react";
 import UserButton from "./UserButton";
+import { useLinkClickHandler } from "react-router-dom";
 
 export default function Navbar() {
+  const handleSignUpClick = useLinkClickHandler("/sign-up");
+  const handleLoginClick = useLinkClickHandler("/login");
   return (
     <header>
       <nav className="flex justify-between">
@@ -12,7 +15,13 @@ export default function Navbar() {
           <span>A1.</span>Invitation Maker
         </a>
 
-        <UserButton />
+        <div>
+          {/* @ts-ignore */}
+          <button onClick={handleLoginClick}>Login</button>
+          {/* @ts-ignore */}
+          <button onClick={handleSignUpClick}>Sign Up</button>
+          <UserButton />
+        </div>
       </nav>
     </header>
   );
