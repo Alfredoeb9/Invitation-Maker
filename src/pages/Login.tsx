@@ -65,9 +65,12 @@ export default function Login() {
                       {...field}
                       // onError={field.value}
                     />
-                    <p className="text-red-500">
-                      Error: {form.formState.errors.email?.message}
-                    </p>
+
+                    {form.formState.errors.email && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.email?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
@@ -89,9 +92,12 @@ export default function Login() {
                       className="text-black"
                       {...field}
                     />
-                    <p className="text-red-500">
-                      Error: {form.formState.errors.password?.message}
-                    </p>
+
+                    {form.formState.errors.password && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.password?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>

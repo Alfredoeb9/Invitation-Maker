@@ -74,9 +74,12 @@ export default function SignUp() {
                       {...field}
                       // onError={field.value}
                     />
-                    <p className="text-red-500">
-                      {form.formState.errors.email?.message}
-                    </p>
+
+                    {form.formState.errors.email && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.email?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
@@ -98,9 +101,11 @@ export default function SignUp() {
                       className="text-black"
                       {...field}
                     />
-                    <p className="text-red-500">
-                      {form.formState.errors.password?.message}
-                    </p>
+                    {form.formState.errors.password && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.password?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
@@ -112,7 +117,7 @@ export default function SignUp() {
             name="userName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>username</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
                   <>
                     <Input
@@ -122,9 +127,12 @@ export default function SignUp() {
                       className="text-black"
                       {...field}
                     />
-                    <p className="text-red-500">
-                      {form.formState.errors.userName?.message}
-                    </p>
+
+                    {form.formState.errors.userName && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.userName?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
@@ -146,9 +154,12 @@ export default function SignUp() {
                       className="text-black"
                       {...field}
                     />
-                    <p className="text-red-500">
-                      {form.formState.errors.firstName?.message}
-                    </p>
+
+                    {form.formState.errors.firstName && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.firstName?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
@@ -170,9 +181,12 @@ export default function SignUp() {
                       className="text-black"
                       {...field}
                     />
-                    <p className="text-red-500">
-                      {form.formState.errors.lastName?.message}
-                    </p>
+
+                    {form.formState.errors.lastName && (
+                      <p className="text-red-500">
+                        Error: {form.formState.errors.lastName?.message}
+                      </p>
+                    )}
                   </>
                 </FormControl>
               </FormItem>
