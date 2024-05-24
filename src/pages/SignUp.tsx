@@ -51,159 +51,155 @@ export default function SignUp() {
   }
 
   return (
-    <div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-md m-auto"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="max-w-md m-auto py-5"
+      >
+        <h1 className="font-bold text-4xl mb-4">Sign up</h1>
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="text"
+                    placeholder="example@gmail.com"
+                    className="text-black"
+                    {...field}
+                  />
+
+                  {form.formState.errors.email && (
+                    <p className="text-red-500">
+                      Error: {form.formState.errors.email?.message}
+                    </p>
+                  )}
+                </>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="password"
+                    placeholder="password"
+                    autoComplete="true"
+                    className="text-black"
+                    {...field}
+                  />
+                  {form.formState.errors.password && (
+                    <p className="text-red-500">
+                      Error: {form.formState.errors.password?.message}
+                    </p>
+                  )}
+                </>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="userName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="text"
+                    placeholder="userName"
+                    autoComplete="true"
+                    className="text-black"
+                    {...field}
+                  />
+
+                  {form.formState.errors.userName && (
+                    <p className="text-red-500">
+                      Error: {form.formState.errors.userName?.message}
+                    </p>
+                  )}
+                </>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="text"
+                    placeholder="John"
+                    autoComplete="true"
+                    className="text-black"
+                    {...field}
+                  />
+
+                  {form.formState.errors.firstName && (
+                    <p className="text-red-500">
+                      Error: {form.formState.errors.firstName?.message}
+                    </p>
+                  )}
+                </>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="text"
+                    placeholder="Doe"
+                    autoComplete="true"
+                    className="text-black"
+                    {...field}
+                  />
+
+                  {form.formState.errors.lastName && (
+                    <p className="text-red-500">
+                      Error: {form.formState.errors.lastName?.message}
+                    </p>
+                  )}
+                </>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <button
+          type="submit"
+          onClick={form.handleSubmit(onSubmit)}
+          className="mt-4 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-200 text-white rounded-lg w-full"
         >
-          <h1 className="font-bold text-4xl mb-4">Sign up</h1>
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="example@gmail.com"
-                      className="text-black"
-                      {...field}
-                      // onError={field.value}
-                    />
-
-                    {form.formState.errors.email && (
-                      <p className="text-red-500">
-                        Error: {form.formState.errors.email?.message}
-                      </p>
-                    )}
-                  </>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      type="password"
-                      placeholder="password"
-                      autoComplete="true"
-                      className="text-black"
-                      {...field}
-                    />
-                    {form.formState.errors.password && (
-                      <p className="text-red-500">
-                        Error: {form.formState.errors.password?.message}
-                      </p>
-                    )}
-                  </>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="userName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="userName"
-                      autoComplete="true"
-                      className="text-black"
-                      {...field}
-                    />
-
-                    {form.formState.errors.userName && (
-                      <p className="text-red-500">
-                        Error: {form.formState.errors.userName?.message}
-                      </p>
-                    )}
-                  </>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="John"
-                      autoComplete="true"
-                      className="text-black"
-                      {...field}
-                    />
-
-                    {form.formState.errors.firstName && (
-                      <p className="text-red-500">
-                        Error: {form.formState.errors.firstName?.message}
-                      </p>
-                    )}
-                  </>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="Doe"
-                      autoComplete="true"
-                      className="text-black"
-                      {...field}
-                    />
-
-                    {form.formState.errors.lastName && (
-                      <p className="text-red-500">
-                        Error: {form.formState.errors.lastName?.message}
-                      </p>
-                    )}
-                  </>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <button
-            type="submit"
-            onClick={form.handleSubmit(onSubmit)}
-            className="mt-4 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-200 text-white rounded-lg w-full"
-          >
-            Sign Up
-          </button>
-        </form>
-      </Form>
-
+          Sign Up
+        </button>
+      </form>
       <ToastContainer />
-    </div>
+    </Form>
   );
 }
