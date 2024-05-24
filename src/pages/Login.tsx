@@ -45,13 +45,10 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div className="max-w-md m-auto">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-md m-auto"
-        >
-          <h1 className="font-bold text-4xl mb-4">Log In</h1>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <h1 className="font-bold text-4xl mb-4 text-center mt-10">Log In</h1>
 
           <FormField
             control={form.control}
@@ -69,7 +66,7 @@ export default function Login() {
                       // onError={field.value}
                     />
                     <p className="text-red-500">
-                      {form.formState.errors.email?.message}
+                      Error: {form.formState.errors.email?.message}
                     </p>
                   </>
                 </FormControl>
@@ -93,7 +90,7 @@ export default function Login() {
                       {...field}
                     />
                     <p className="text-red-500">
-                      {form.formState.errors.password?.message}
+                      Error: {form.formState.errors.password?.message}
                     </p>
                   </>
                 </FormControl>
