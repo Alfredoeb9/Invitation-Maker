@@ -86,7 +86,7 @@ export default function CreateInvitation() {
                   </FormControl>
                 </FormItem>
               )}
-            ></FormField>
+            />
           </form>
         </Form>
         <DialogFooter>
