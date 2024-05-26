@@ -6,7 +6,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 export default function PrivateRoutes() {
   const location = useLocation();
   const user = useAppSelector(isUserLoggedIn);
-  return user ? (
+  return user.length > 0 ? (
     <Outlet />
   ) : (
     <Navigate to={"/login"} state={{ from: location }} replace />
