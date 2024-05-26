@@ -8,12 +8,12 @@ export const userApi = createApi({
   tagTypes: ["Login"],
   endpoints: (builder) => ({
     getUserByEmail: builder.query({
-      query: () => "/login",
+      query: () => "/auth/login",
       providesTags: ["Login"],
     }),
     signUp: builder.mutation({
       query: (payload) => ({
-        url: "/sign-up",
+        url: "/auth/sign-up",
         method: "POST",
         body: payload,
         headers: {
@@ -22,9 +22,25 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["Login"],
     }),
+
+    verifyEmail: builder.mutation({
+      query: (id) => ({
+        url: "/auth/verify-email",
+        method: "POST",
+        body: id,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: id,
+        },
+      }),
+    }),
   }),
 });
 
 // export hooks for usage in funcitonal components, which are
 // auto generated baed on the defined endpoints
-export const { useGetUserByEmailQuery, useSignUpMutation } = userApi;
+export const {
+  useGetUserByEmailQuery,
+  useSignUpMutation,
+  useVerifyEmailMutation,
+} = userApi;
