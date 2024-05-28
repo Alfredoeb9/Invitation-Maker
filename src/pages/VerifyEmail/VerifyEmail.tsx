@@ -66,11 +66,8 @@ export default function VerifyEmail() {
         {isError && (
           <div className="verified-error text-lg">
             <h1 className="text-4xl font-bold">Verify Email</h1>
-            <div className="pb-12">
-              <div style={{ fontSize: "4rem", color: "#FD8282" }} />
-            </div>
             {/* @ts-expect-error data is present during error */}
-            <span style={{ fontWeight: "bold" }}>{error?.data.error}</span>
+            <span className="font-bold text-red-500">{error?.data.error}</span>
           </div>
         )}
       </div>
