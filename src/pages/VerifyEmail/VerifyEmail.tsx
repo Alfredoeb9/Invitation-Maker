@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
 import { useVerifyEmailMutation } from "../../redux/api/userAPI";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 export default function VerifyEmail() {
   const { id } = useParams();
-  const [verifyEmail, { data, isError, isSuccess, isLoading }] =
-    // @ts-expect-error id passed must be a number, but we don't call it when it isn't a number
-    useVerifyEmailMutation(id);
 
-  // const fetchVerify = async () => {
-  //   try {
-  //     const response = await verifyEmail(id);
+  console.log("id", id);
+  const [verifyEmail, { data, isError, isSuccess, isLoading, error }] =
+    useVerifyEmailMutation(id ?? (skipToken as any));
 
-  //     console.log("response", response);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+  const fetchVerify = async () => {
+    try {
+      const response = await verifyEmail(id);
+
+      console.log("response", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   // setTimeout(async () => {
   //   await verifyEmail(id);
@@ -28,11 +30,50 @@ export default function VerifyEmail() {
   //   fetchVerify();
   // }, []);
 
-  console.log("data", data);
+  // fetchVerify();
+  // console.log("data", data);
+  // console.log("isSuccess", isSuccess);
+
+  useEffect(() => {
+    fetchVerify();
+    // verifyEmail(id)
+    //   .unwrap()
+    //   .then((value) => console.log("va", value));
+  }, []);
 
   return (
-    <div>
-      <h1>Verify Email</h1>
+    <div className="content-center h-[80dvh] w-full rounded-3xl text-center text-black">
+      <div className="bg-white max-w-fit ms-auto me-auto p-10 rounded-2xl">
+        {isSuccess && (
+          <div className="email-verified text-lg">
+            <h1 className="text-4xl font-bold">Verified</h1>
+            <span className="font-bold">
+              {" "}
+              Thank you for verifying your email.{" "}
+            </span>
+            <br />
+            Please{" "}
+            <Link
+              to={`/login`}
+              className="bg-cyan-500 rounded-xl py-1 px-2 text-white hover:bg-cyan-600 transition-all"
+            >
+              sign-in
+            </Link>{" "}
+            to access your account.
+          </div>
+        )}
+
+        {isError && (
+          <div className="verified-error text-lg">
+            <h1 className="text-4xl font-bold">Verify Email</h1>
+            <div className="pb-12">
+              <div style={{ fontSize: "4rem", color: "#FD8282" }} />
+            </div>
+            {/* @ts-expect-error data is present during error */}
+            <span style={{ fontWeight: "bold" }}>{error?.data.error}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

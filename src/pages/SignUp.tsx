@@ -11,6 +11,7 @@ import { Input } from "../components/ui/input";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
+import { useSignUpMutation, userApi } from "../redux/api/userAPI";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function SignUp() {
+  const [signUp] = useSignUpMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +38,9 @@ export default function SignUp() {
 
   async function onSubmit(values: formSchemaType) {
     try {
-      console.log("v", values);
+      const response = await signUp(values);
+
+      return response;
     } catch (error) {
       toast(`Sorry something went wrong, please try again`, {
         position: "bottom-right",

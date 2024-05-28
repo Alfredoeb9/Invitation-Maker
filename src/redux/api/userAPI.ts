@@ -27,7 +27,6 @@ export const userApi = createApi({
       query: (id) => ({
         url: "/auth/verify-email",
         method: "POST",
-        body: id,
         headers: {
           "Content-type": "application/json",
           Authorization: id,
