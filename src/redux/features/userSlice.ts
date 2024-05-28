@@ -35,10 +35,20 @@ export const userSlice = createSlice({
       state.isVerified = action.payload.isVerified;
       state.lastName = action.payload.lastName;
     },
+
+    userLogout: (state) => {
+      state.email = "";
+      state.credits = 0;
+      state.id = "";
+      state.userName = "";
+      state.firstName = "";
+      state.isVerified = false;
+      state.lastName = "";
+    },
   },
 });
 
-export const { userLogin } = userSlice.actions;
+export const { userLogin, userLogout } = userSlice.actions;
 
 export const isUserLoggedIn = (state: RootState) => state.user.email;
 

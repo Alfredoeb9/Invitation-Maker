@@ -14,7 +14,7 @@ import { z } from "zod";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { Spinner } from "../assets/svg/Spinner";
 import { useAppDispatch } from "../redux/hooks";
-import { userLogin } from "../redux/features/userSlice";
+import { userLogin, userLogout } from "../redux/features/userSlice";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
