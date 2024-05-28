@@ -12,6 +12,9 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
 import { useLoginMutation } from "../redux/api/userAPI";
+import { Spinner } from "../assets/svg/Spinner";
+import { useAppDispatch } from "../redux/hooks";
+import { userLogin } from "../redux/features/userSlice";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -21,7 +24,9 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function Login() {
-  const [login, { data, error, isSuccess, status }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const [login, { data, error, isSuccess, status, isLoading }] =
+    useLoginMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,7 +46,10 @@ export default function Login() {
         { email: email, password: password },
         /// @ts-expect-error email and password passed must be a string, but we don't call it when it is not passed down
         { skip: !email || !password }
-      );
+      ).then(({ data }) => {
+        console.log("data", data);
+        dispatch(userLogin(data));
+      });
     } catch (error) {
       toast(`Sorry something went wrong, please try again`, {
         position: "bottom-right",
@@ -55,81 +63,85 @@ export default function Login() {
     }
   }
 
-  console.log("data", data);
-  console.log("error", error);
-  console.log("status", status);
-
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-md m-auto py-5"
-      >
-        <h1 className="font-bold text-4xl mb-4 text-center mt-10">Log In</h1>
+    <>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="max-w-md m-auto py-5"
+          >
+            <h1 className="font-bold text-4xl mb-4 text-center mt-10">
+              Log In
+            </h1>
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <>
-                  <Input
-                    type="text"
-                    placeholder="example@gmail.com"
-                    className="text-black"
-                    {...field}
-                    // onError={field.value}
-                  />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <>
+                      <Input
+                        type="text"
+                        placeholder="example@gmail.com"
+                        className="text-black"
+                        {...field}
+                        // onError={field.value}
+                      />
 
-                  {form.formState.errors.email && (
-                    <p className="text-red-500">
-                      Error: {form.formState.errors.email?.message}
-                    </p>
-                  )}
-                </>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+                      {form.formState.errors.email && (
+                        <p className="text-red-500">
+                          Error: {form.formState.errors.email?.message}
+                        </p>
+                      )}
+                    </>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <>
-                  <Input
-                    type="password"
-                    placeholder="password"
-                    autoComplete="true"
-                    className="text-black"
-                    {...field}
-                  />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <>
+                      <Input
+                        type="password"
+                        placeholder="password"
+                        autoComplete="true"
+                        className="text-black"
+                        {...field}
+                      />
 
-                  {form.formState.errors.password && (
-                    <p className="text-red-500">
-                      Error: {form.formState.errors.password?.message}
-                    </p>
-                  )}
-                </>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+                      {form.formState.errors.password && (
+                        <p className="text-red-500">
+                          Error: {form.formState.errors.password?.message}
+                        </p>
+                      )}
+                    </>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-        <button
-          type="submit"
-          onClick={form.handleSubmit(onSubmit)}
-          className="mt-4 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-200 text-white rounded-lg w-full"
-        >
-          Log In
-        </button>
-      </form>
-      <ToastContainer />
-    </Form>
+            <button
+              type="submit"
+              onClick={form.handleSubmit(onSubmit)}
+              className="mt-4 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-200 text-white rounded-lg w-full"
+            >
+              Log In
+            </button>
+          </form>
+          <ToastContainer />
+        </Form>
+      )}
+    </>
   );
 }
