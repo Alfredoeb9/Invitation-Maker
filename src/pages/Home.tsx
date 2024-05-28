@@ -7,7 +7,9 @@ export default function Home() {
   // console.log("data", data);
   return (
     <main className="container">
-      <div id="home-hero" className="hero"></div>
+      <div id="home-hero" className="hero">
+        hey man
+      </div>
     </main>
   );
 }

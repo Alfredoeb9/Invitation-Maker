@@ -26,7 +26,7 @@ export const userApi = createApi({
           "Content-type": "application/json",
         },
       }),
-      invalidatesTags: ["Login"],
+      // invalidatesTags: ["Login"],
     }),
     signUp: builder.mutation({
       query: (payload) => ({
