@@ -8,8 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useAppDispatch } from "../redux/hooks";
+import { userLogout } from "../redux/features/userSlice";
 
 export default function UserButton() {
+  const dispatch = useAppDispatch();
   return (
     <div>
       <DropdownMenu>
@@ -27,6 +30,9 @@ export default function UserButton() {
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => dispatch(userLogout())}>
+            Log out
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
