@@ -6,39 +6,19 @@ import { skipToken } from "@reduxjs/toolkit/query";
 export default function VerifyEmail() {
   const { id } = useParams();
 
-  console.log("id", id);
   const [verifyEmail, { data, isError, isSuccess, isLoading, error }] =
     useVerifyEmailMutation(id ?? (skipToken as any));
 
   const fetchVerify = async () => {
     try {
-      const response = await verifyEmail(id);
-
-      console.log("response", response);
+      await verifyEmail(id);
     } catch (error) {
-      console.log("error", error);
+      return error;
     }
   };
 
-  // setTimeout(async () => {
-  //   await verifyEmail(id);
-  // }, 1000);
-
-  // verifyEmail(id);
-
-  // useEffect(() => {
-  //   fetchVerify();
-  // }, []);
-
-  // fetchVerify();
-  // console.log("data", data);
-  // console.log("isSuccess", isSuccess);
-
   useEffect(() => {
     fetchVerify();
-    // verifyEmail(id)
-    //   .unwrap()
-    //   .then((value) => console.log("va", value));
   }, []);
 
   return (
