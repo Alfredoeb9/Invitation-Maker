@@ -1,6 +1,10 @@
 import React from "react";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+interface LoginTypes {
+  email: string;
+  password: string;
+}
 // Define a service using a bae URL and expected endpoints
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -10,6 +14,17 @@ export const userApi = createApi({
     getUserByEmail: builder.query({
       query: () => "/auth/login",
       providesTags: ["Login"],
+    }),
+    login: builder.mutation({
+      query: (payload: LoginTypes) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Login"],
     }),
     signUp: builder.mutation({
       query: (payload) => ({
@@ -40,6 +55,7 @@ export const userApi = createApi({
 // auto generated baed on the defined endpoints
 export const {
   useGetUserByEmailQuery,
+  useLoginMutation,
   useSignUpMutation,
   useVerifyEmailMutation,
 } = userApi;

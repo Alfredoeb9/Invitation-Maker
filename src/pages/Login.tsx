@@ -11,15 +11,17 @@ import { Input } from "../components/ui/input";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
+import { useLoginMutation } from "../redux/api/userAPI";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6),
+  password: z.string().min(6, { message: "Invalid password address" }),
 });
 
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function Login() {
+  const [login, { data, error, isSuccess, status }] = useLoginMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,7 +32,16 @@ export default function Login() {
 
   async function onSubmit(values: formSchemaType) {
     try {
-      console.log("v", values);
+      const { email, password } = values;
+
+      if (!email) throw Error("Please provide a email");
+      if (!password) throw Error("Please provide a password");
+
+      await login(
+        { email: email, password: password },
+        /// @ts-expect-error email and password passed must be a string, but we don't call it when it is not passed down
+        { skip: !email || !password }
+      );
     } catch (error) {
       toast(`Sorry something went wrong, please try again`, {
         position: "bottom-right",
@@ -43,6 +54,10 @@ export default function Login() {
       });
     }
   }
+
+  console.log("data", data);
+  console.log("error", error);
+  console.log("status", status);
 
   return (
     <Form {...form}>
