@@ -8,8 +8,6 @@ export default function PrivateRoutes() {
   const user = useAppSelector(isUserLoggedIn);
   const user2 = useAppSelector((state) => state.user.email);
 
-  console.log("user", user);
-  console.log("user2", user2);
   return user.length > 0 ? (
     <Outlet />
   ) : (
