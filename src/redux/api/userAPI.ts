@@ -8,7 +8,9 @@ interface LoginTypes {
 // Define a service using a bae URL and expected endpoints
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://invitation-maker-be.vercel.app",
+  }),
   tagTypes: ["Login"],
   endpoints: (builder) => ({
     getUserByEmail: builder.query({
