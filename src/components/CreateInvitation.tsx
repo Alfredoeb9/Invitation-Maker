@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -14,12 +13,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { Input } from "./ui/input";
 import { ToastContainer, toast } from "react-toastify";
-import { userApi, useSignUpMutation } from "../redux/api/userAPI";
 import { useAddInvitationMutation } from "../redux/api/invitationAPI";
 import { Textarea } from "./ui/textarea";
 import { useAppSelector } from "../redux/hooks";
-import { isUserLoggedIn } from "../redux/features/userSlice";
-import { skipToken } from "@reduxjs/toolkit/query";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -30,7 +26,7 @@ type formSchemaType = z.infer<typeof formSchema>;
 
 export default function CreateInvitation() {
   const [stateError, setStateError] = useState("");
-  // const [signUp, { isLoading, isSuccess, isError }] = useSignUpMutation();
+  const [open, setOpen] = useState(false);
   const [createInvitation, { data, error, isError, isLoading, status }] =
     useAddInvitationMutation();
   const user = useAppSelector((state) => state.user);
@@ -50,15 +46,23 @@ export default function CreateInvitation() {
       // @ts-expect-error newValues is present at this level
       await createInvitation(newValues, { skipToken: !newValues })
         .unwrap()
-        .then()
+        .then(() => {
+          toast("Invitation created, cheers! 🥳", {
+            position: "bottom-right",
+            autoClose: 3500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            type: "success",
+          });
+        })
         .catch((error) => {
-          console.log("rejected", error.data.error);
           if (error.data.error.includes("Name is taken in your repository")) {
             setStateError(error.data.error);
           }
         });
     } catch (error: any) {
-      console.log("222", error);
       toast(`Sorry something went wrong, please try again`, {
         position: "bottom-right",
         autoClose: 3500,
@@ -71,16 +75,12 @@ export default function CreateInvitation() {
     }
   }
 
-  console.log("error", error);
-
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <span className="bg-white rounded-lg text-black px-2 py-3">
           Create New Invitation
         </span>
-
-        <p>{status}</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -136,7 +136,20 @@ export default function CreateInvitation() {
         </Form>
         <DialogFooter>
           <button
-            onClick={form.handleSubmit(onSubmit)}
+            onClick={() => {
+              setOpen(false);
+            }}
+            disabled={form.formState.isSubmitting || isLoading}
+            className="mt-4 text-white font-semibold bg-cyan-500 px-2 py-1 rounded-md hover:bg-cyan-600 transition-all"
+            type="submit"
+          >
+            Close
+          </button>
+          <button
+            onClick={() => {
+              setOpen(false);
+              form.handleSubmit(onSubmit);
+            }}
             disabled={form.formState.isSubmitting || isLoading}
             className="mt-4 bg-white text-black font-semibold"
             type="submit"

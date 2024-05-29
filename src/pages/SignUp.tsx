@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -11,7 +11,10 @@ import { Input } from "../components/ui/input";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
-import { useSignUpMutation, userApi } from "../redux/api/userAPI";
+import { useSignUpMutation } from "../redux/api/userAPI";
+import { useAppSelector } from "../redux/hooks";
+import { useNavigate } from "react-router-dom";
+import { isUserLoggedIn } from "../redux/features/userSlice";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -24,7 +27,9 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [signUp] = useSignUpMutation();
+  const user = useAppSelector(isUserLoggedIn);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,6 +40,12 @@ export default function SignUp() {
       userName: "",
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user]);
 
   async function onSubmit(values: formSchemaType) {
     try {
