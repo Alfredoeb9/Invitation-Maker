@@ -9,6 +9,7 @@ module.exports = merge(common, {
     new Dotenv({
       path: path.resolve(process.cwd(), ".env"),
       safe: true,
+      systemvars: true,
     }),
   ],
   optimization: {
