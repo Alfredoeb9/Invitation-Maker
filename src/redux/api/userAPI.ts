@@ -9,7 +9,7 @@ interface LoginTypes {
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://invitation-maker-be.vercel.app",
+    baseUrl: "https://invitation-maker-be.vercel.app/api",
   }),
   tagTypes: ["Login"],
   endpoints: (builder) => ({
