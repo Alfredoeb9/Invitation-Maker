@@ -15,6 +15,7 @@ import storage from "redux-persist/lib/storage";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import userSlice from "./features/userSlice";
 import { userApi } from "./api/userAPI";
+import { invitationsApi } from "./api/invitationAPI";
 
 const persistAuthConfig = {
   key: "root",
@@ -22,7 +23,7 @@ const persistAuthConfig = {
   storage,
 };
 
-const rootReducer = combineSlices(userSlice, userApi);
+const rootReducer = combineSlices(userSlice, userApi, invitationsApi);
 
 const persistedReducer = persistReducer(persistAuthConfig, rootReducer);
 
@@ -38,7 +39,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(userApi.middleware),
+      }).concat(userApi.middleware, invitationsApi.middleware),
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     // middleware: (getDefaultMiddleware) =>
