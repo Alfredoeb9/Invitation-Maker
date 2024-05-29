@@ -19,6 +19,7 @@ import { useAddInvitationMutation } from "../redux/api/invitationAPI";
 import { Textarea } from "./ui/textarea";
 import { useAppSelector } from "../redux/hooks";
 import { isUserLoggedIn } from "../redux/features/userSlice";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -28,9 +29,9 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function CreateInvitation() {
-  const [email, setEmail] = useState("");
+  const [stateError, setStateError] = useState("");
   // const [signUp, { isLoading, isSuccess, isError }] = useSignUpMutation();
-  const [createInvitation, { data, error, isError, isLoading }] =
+  const [createInvitation, { data, error, isError, isLoading, status }] =
     useAddInvitationMutation();
   const user = useAppSelector((state) => state.user);
 
@@ -44,11 +45,20 @@ export default function CreateInvitation() {
 
   async function onSubmit(values: formSchemaType) {
     try {
+      setStateError("");
       const newValues = { ...values, id: user.id, email: user.email };
-
-      await createInvitation(newValues);
+      // @ts-expect-error newValues is present at this level
+      await createInvitation(newValues, { skipToken: !newValues })
+        .unwrap()
+        .then()
+        .catch((error) => {
+          console.log("rejected", error.data.error);
+          if (error.data.error.includes("Name is taken in your repository")) {
+            setStateError(error.data.error);
+          }
+        });
     } catch (error: any) {
-      console.log("error", error);
+      console.log("222", error);
       toast(`Sorry something went wrong, please try again`, {
         position: "bottom-right",
         autoClose: 3500,
@@ -69,6 +79,8 @@ export default function CreateInvitation() {
         <span className="bg-white rounded-lg text-black px-2 py-3">
           Create New Invitation
         </span>
+
+        <p>{status}</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -96,6 +108,10 @@ export default function CreateInvitation() {
                 </FormItem>
               )}
             />
+
+            {stateError && (
+              <p className="text-red-500 font-semibold">Error: {stateError}</p>
+            )}
 
             <FormField
               control={form.control}
