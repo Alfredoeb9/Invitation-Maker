@@ -19,7 +19,7 @@ export const userApi = createApi({
       query: (payload: LoginTypes) => ({
         url: "/auth/login",
         method: "POST",
-        body: JSON.stringify(payload),
+        body: payload,
         headers: {
           "Content-type": "application/json",
         },
