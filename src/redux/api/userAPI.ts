@@ -23,8 +23,9 @@ export const userApi = createApi({
         headers: {
           "Content-type": "application/json",
         },
+        mode: "cors",
       }),
-      // invalidatesTags: ["Login"],
+      invalidatesTags: ["Login"],
     }),
     signUp: builder.mutation({
       query: (payload) => ({
