@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 import {
@@ -8,7 +8,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -25,7 +24,7 @@ export default function DeleteInvitationModal({
   setDeleteModal,
   deleteModal,
 }: DeleteInvitationTypes) {
-  console.log("test", invitationId);
+  const [deleteInvId, setDeleteInvId] = useState<string>("");
 
   return (
     <Dialog open={deleteModal} onOpenChange={setDeleteModal}>
@@ -34,23 +33,29 @@ export default function DeleteInvitationModal({
       </DialogTrigger> */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+          <DialogTitle>Delete Invitation</DialogTitle>
+          <DialogDescription className="text-red-400">
+            Please note this action cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+          <div>
+            <p className="font-semibold">
+              Input Invitation Id down below to delete:{" "}
+              <span className="text-red-500">{invitationId}</span>
+            </p>
+            {/* <Label htmlFor="name" className="text-right mb-2">
+              Invitation Id
+            </Label> */}
             <Input
               id="name"
-              defaultValue="Pedro Duarte"
+              defaultValue=""
               className="col-span-3"
+              value={deleteInvId}
+              onChange={(e) => setDeleteInvId(e.currentTarget.value)}
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
               Username
             </Label>
@@ -59,10 +64,19 @@ export default function DeleteInvitationModal({
               defaultValue="@peduarte"
               className="col-span-3"
             />
-          </div>
+          </div> */}
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
+        <DialogFooter className="flex-row justify-end gap-2">
+          <Button
+            type="submit"
+            className="bg-red-500 hover:bg-red-600"
+            disabled={!deleteInvId}
+          >
+            Delete
+          </Button>
+          <Button type="button" onClick={() => setDeleteModal(false)}>
+            Close
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
