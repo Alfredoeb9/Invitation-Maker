@@ -11,14 +11,31 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
 import { Link } from "react-router-dom";
+import DeleteInvitationModal from "../components/modals/DeleteInvitationModal";
 
 export default function Home() {
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [invId, setInvId] = useState<string>("");
   const user = useAppSelector((state) => state.user);
   const { data, isError, error, isSuccess } = useGetAllUserInvitationQuery(
     user.token ?? skipToken,
     { refetchOnMountOrArgChange: true }
   );
+
+  // if (deleteModal) {
+  //   // console.log("de", deleteModal);
+  //   <DeleteInvitationModal />;
+  // }
 
   return (
     <main className="container">
@@ -45,12 +62,26 @@ export default function Home() {
                   >
                     Edit
                   </Link>
-                  <button className="bg-red-300 px-2 rounded-lg font-semibold hover:bg-red-400 transition-all">
+                  <button
+                    className="bg-red-300 px-2 rounded-lg font-semibold hover:bg-red-400 transition-all"
+                    onClick={() => {
+                      setInvId(inv.id);
+                      setDeleteModal(true);
+                    }}
+                  >
                     Delete
                   </button>
                 </CardFooter>
               </Card>
             ))}
+
+            {deleteModal && (
+              <DeleteInvitationModal
+                invitationId={invId}
+                deleteModal={deleteModal}
+                setDeleteModal={setDeleteModal}
+              />
+            )}
           </div>
         )}
       </div>
