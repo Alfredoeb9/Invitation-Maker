@@ -29,13 +29,22 @@ export default function DeleteInvitationModal({
   deleteModal,
 }: DeleteInvitationTypes) {
   const [deleteInvId, setDeleteInvId] = useState<string>("");
-  const [deleteInvitation, result] = useDeleteInvitationMutation();
+  const [deleteInvitation, { isLoading }] = useDeleteInvitationMutation();
 
-  async function handleDeleteInvitation(values: any) {
+  async function handleDeleteInvitation(values: string) {
     try {
       const newValues = { values, id: token };
       await deleteInvitation(newValues).then(() => {
         setDeleteModal(false);
+        toast(`Invitation has been deleted`, {
+          position: "bottom-right",
+          autoClose: 3500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          type: "success",
+        });
       });
     } catch (error) {
       toast(`Sorry something went wrong, please try again`, {
@@ -52,9 +61,6 @@ export default function DeleteInvitationModal({
 
   return (
     <Dialog open={deleteModal} onOpenChange={setDeleteModal}>
-      {/* <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger> */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Delete Invitation</DialogTitle>
@@ -68,9 +74,6 @@ export default function DeleteInvitationModal({
               Input Invitation Id down below to delete:{" "}
               <span className="text-red-500">{invitationId}</span>
             </p>
-            {/* <Label htmlFor="name" className="text-right mb-2">
-              Invitation Id
-            </Label> */}
             <Input
               id="name"
               defaultValue=""
@@ -79,22 +82,12 @@ export default function DeleteInvitationModal({
               onChange={(e) => setDeleteInvId(e.currentTarget.value)}
             />
           </div>
-          {/* <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-3"
-            />
-          </div> */}
         </div>
         <DialogFooter className="flex-row justify-end gap-2">
           <Button
             type="submit"
             className="bg-red-500 hover:bg-red-600"
-            disabled={!deleteInvId}
+            disabled={!deleteInvId || isLoading}
             onClick={() => handleDeleteInvitation(invitationId)}
           >
             Delete
