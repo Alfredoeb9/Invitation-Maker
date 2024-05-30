@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const user = useAppSelector((state) => state.user);
@@ -38,9 +39,12 @@ export default function Home() {
                   <p>Card Content</p>
                 </CardContent>
                 <CardFooter className="justify-end gap-2">
-                  <button className="bg-slate-300 px-2 rounded-lg font-semibold hover:bg-slate-400 transition-all">
+                  <Link
+                    to={`/invitation/${inv.id}`}
+                    className="bg-slate-300 px-2 rounded-lg font-semibold hover:bg-slate-400 transition-all"
+                  >
                     Edit
-                  </button>
+                  </Link>
                   <button className="bg-red-300 px-2 rounded-lg font-semibold hover:bg-red-400 transition-all">
                     Delete
                   </button>

@@ -18,6 +18,7 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import MyInvitations from "./pages/MyInvitations/MyInvitations";
 import Welcome from "./pages/Welcome";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
+import Invitation from "./pages/Invitation/Invitation";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoutes />}>
         <Route index element={<Home />} />
         <Route path="/my-invitation" element={<MyInvitations />} />
+        <Route path="/invitation/:id" element={<Invitation />} />
       </Route>
 
       <Route path="/welcome" element={<Welcome />} />
