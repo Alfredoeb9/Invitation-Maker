@@ -8,6 +8,7 @@ export default function Navbar() {
   const handleSignUpClick = useLinkClickHandler("/sign-up");
   const handleLoginClick = useLinkClickHandler("/login");
   const userEmail = useAppSelector(isUserLoggedIn);
+
   return (
     <header className="bg-white container">
       <nav className="flex justify-between">
@@ -21,7 +22,7 @@ export default function Navbar() {
           <Link to={"/"}>Home</Link>
         </div>
 
-        {userEmail.length <= 0 ? (
+        {!userEmail ? (
           <div className="flex gap-4 text-black justify-center">
             <button
               //@ts-ignore

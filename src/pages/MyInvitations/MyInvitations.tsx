@@ -1,10 +1,12 @@
+import React from "react";
 import CreateInvitation from "../../components/CreateInvitation";
 import { isUserLoggedIn } from "../../redux/features/userSlice";
 import { useAppSelector } from "../../redux/hooks";
-import React from "react";
 
 export default function MyInvitations() {
   const userEmail = useAppSelector(isUserLoggedIn);
+
+  // console.log("user", userInvitations.data);
   return (
     <div>
       {userEmail.length <= 0 ? (

@@ -10,6 +10,7 @@ interface UserState {
   firstName: string;
   isVerified: boolean;
   lastName: string;
+  token: string;
 }
 
 const initialState: UserState = {
@@ -20,6 +21,7 @@ const initialState: UserState = {
   firstName: "",
   isVerified: false,
   lastName: "",
+  token: "",
 };
 
 export const userSlice = createSlice({
@@ -34,6 +36,7 @@ export const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.isVerified = action.payload.isVerified;
       state.lastName = action.payload.lastName;
+      state.token = action.payload.token;
     },
 
     userLogout: (state) => {
@@ -44,6 +47,7 @@ export const userSlice = createSlice({
       state.firstName = "";
       state.isVerified = false;
       state.lastName = "";
+      state.token = "";
     },
   },
 });

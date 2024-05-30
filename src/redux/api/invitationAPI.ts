@@ -16,9 +16,31 @@ export const invitationsApi = createApi({
           Authorization: id,
         },
       }),
-      invalidatesTags: ["invitations"],
+      invalidatesTags: () => ["invitations"],
+    }),
+    getAllUserInvitation: builder.query({
+      query: (id) => ({
+        url: "/inv",
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: id,
+        },
+      }),
+      // providesTags: (result, error, arg) =>
+      //   result
+      //     ? [
+      //         ...result.map(({ id }: any) => ({
+      //           type: "invitations" as const,
+      //           id,
+      //         })),
+      //         "invitations",
+      //       ]
+      //     : ["invitations"],
+      providesTags: () => ["invitations"],
     }),
   }),
 });
 
-export const { useAddInvitationMutation } = invitationsApi;
+export const { useAddInvitationMutation, useGetAllUserInvitationQuery } =
+  invitationsApi;

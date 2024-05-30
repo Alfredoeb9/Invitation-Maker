@@ -13,9 +13,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { Input } from "./ui/input";
 import { ToastContainer, toast } from "react-toastify";
-import { useAddInvitationMutation } from "../redux/api/invitationAPI";
+import {
+  invitationsApi,
+  useAddInvitationMutation,
+  useGetAllUserInvitationQuery,
+} from "../redux/api/invitationAPI";
 import { Textarea } from "./ui/textarea";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { userApi } from "../redux/api/userAPI";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -25,11 +30,12 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function CreateInvitation() {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const [stateError, setStateError] = useState("");
   const [open, setOpen] = useState(false);
   const [createInvitation, { data, error, isError, isLoading, status }] =
     useAddInvitationMutation();
-  const user = useAppSelector((state) => state.user);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,7 +48,12 @@ export default function CreateInvitation() {
   async function onSubmit(values: formSchemaType) {
     try {
       setStateError("");
-      const newValues = { ...values, id: user.id, email: user.email };
+      const newValues = {
+        ...values,
+        id: user.token,
+        email: user.email,
+        userId: user.id,
+      };
       // @ts-expect-error newValues is present at this level
       await createInvitation(newValues, { skipToken: !newValues })
         .unwrap()
@@ -56,6 +67,8 @@ export default function CreateInvitation() {
             draggable: false,
             type: "success",
           });
+          // dispatch(invitationsApi.util.resetApiState());
+          setOpen(false);
         })
         .catch((error) => {
           if (error.data.error.includes("Name is taken in your repository")) {
@@ -146,10 +159,7 @@ export default function CreateInvitation() {
             Close
           </button>
           <button
-            onClick={() => {
-              setOpen(false);
-              form.handleSubmit(onSubmit);
-            }}
+            onClick={form.handleSubmit(onSubmit)}
             disabled={form.formState.isSubmitting || isLoading}
             className="mt-4 bg-white text-black font-semibold"
             type="submit"

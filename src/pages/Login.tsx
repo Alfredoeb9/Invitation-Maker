@@ -60,8 +60,7 @@ export default function Login() {
         /// @ts-expect-error email and password passed must be a string, but we don't call it when it is not passed down
         { skip: !email || !password }
       ).then(({ data }) => {
-        console.log("data", data);
-        dispatch(userLogin(data));
+        dispatch(userLogin(data.responseData));
       });
     } catch (error) {
       toast(`Sorry something went wrong, please try again`, {
