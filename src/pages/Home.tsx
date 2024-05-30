@@ -77,6 +77,7 @@ export default function Home() {
 
             {deleteModal && (
               <DeleteInvitationModal
+                token={user.token}
                 invitationId={invId}
                 deleteModal={deleteModal}
                 setDeleteModal={setDeleteModal}

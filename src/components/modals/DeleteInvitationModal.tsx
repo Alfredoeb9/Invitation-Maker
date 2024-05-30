@@ -12,19 +12,43 @@ import {
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { toast } from "react-toastify";
+import { useDeleteInvitationMutation } from "../../redux/api/invitationAPI";
 
 interface DeleteInvitationTypes {
+  token: string;
   invitationId: string;
   deleteModal: boolean;
   setDeleteModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function DeleteInvitationModal({
+  token,
   invitationId,
   setDeleteModal,
   deleteModal,
 }: DeleteInvitationTypes) {
   const [deleteInvId, setDeleteInvId] = useState<string>("");
+  const [deleteInvitation, result] = useDeleteInvitationMutation();
+
+  async function handleDeleteInvitation(values: any) {
+    try {
+      const newValues = { values, id: token };
+      await deleteInvitation(newValues).then(() => {
+        setDeleteModal(false);
+      });
+    } catch (error) {
+      toast(`Sorry something went wrong, please try again`, {
+        position: "bottom-right",
+        autoClose: 3500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        type: "error",
+      });
+    }
+  }
 
   return (
     <Dialog open={deleteModal} onOpenChange={setDeleteModal}>
@@ -71,6 +95,7 @@ export default function DeleteInvitationModal({
             type="submit"
             className="bg-red-500 hover:bg-red-600"
             disabled={!deleteInvId}
+            onClick={() => handleDeleteInvitation(invitationId)}
           >
             Delete
           </Button>
