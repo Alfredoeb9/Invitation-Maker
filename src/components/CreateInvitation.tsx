@@ -90,10 +90,8 @@ export default function CreateInvitation() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <span className="bg-white rounded-lg text-black px-2 py-3">
-          Create New Invitation
-        </span>
+      <DialogTrigger className="bg-white rounded-lg text-black px-2 py-3 hover:bg-slate-200 hover:scale-105 transition-all">
+        <span>Create New Invitation</span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -153,7 +151,7 @@ export default function CreateInvitation() {
               setOpen(false);
             }}
             disabled={form.formState.isSubmitting || isLoading}
-            className="mt-4 text-white font-semibold bg-cyan-500 px-2 py-1 rounded-md hover:bg-cyan-600 transition-all"
+            className="mt-4 text-white font-semibold px-3 py-2 rounded-md bg-slate-400 "
             type="submit"
           >
             Close
@@ -161,7 +159,7 @@ export default function CreateInvitation() {
           <button
             onClick={form.handleSubmit(onSubmit)}
             disabled={form.formState.isSubmitting || isLoading}
-            className="mt-4 bg-white text-black font-semibold"
+            className="mt-4 text-black px-3 py-2 font-semibold rounded-md bg-cyan-500 hover:bg-cyan-600 transition-all "
             type="submit"
           >
             Create

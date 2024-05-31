@@ -70,7 +70,7 @@ export default function DeleteInvitationModal({
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div>
-            <p className="font-semibold">
+            <p className="font-semibold text-slate-400 text-md mb-2">
               Input Invitation Id down below to delete:{" "}
               <span className="text-red-500">{invitationId}</span>
             </p>

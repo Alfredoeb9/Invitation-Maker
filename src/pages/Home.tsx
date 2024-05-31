@@ -45,9 +45,12 @@ export default function Home() {
         <CreateInvitation />
 
         {isSuccess && (
-          <div className="flex flex-row gap-2 mt-6 flex-wrap">
+          <div className="flex flex-row gap-2 mt-6 flex-wrap justify-center md:justify-normal">
             {data.allInvitations.map((inv: any, i: Key) => (
-              <Card key={inv.id} className="w-full max-w-60">
+              <Card
+                key={inv.id}
+                className="w-full max-w-60 flex flex-col justify-between"
+              >
                 <CardHeader>
                   <CardTitle>{inv.name}</CardTitle>
                   <CardDescription>{inv.description}</CardDescription>
@@ -58,12 +61,12 @@ export default function Home() {
                 <CardFooter className="justify-end gap-2">
                   <Link
                     to={`/invitation/${inv.id}`}
-                    className="bg-slate-300 px-2 rounded-lg font-semibold hover:bg-slate-400 transition-all"
+                    className="bg-slate-300 px-3 py-1 rounded-lg font-semibold hover:bg-slate-400 transition-all"
                   >
                     Edit
                   </Link>
                   <button
-                    className="bg-red-300 px-2 rounded-lg font-semibold hover:bg-red-400 transition-all"
+                    className="bg-red-300 px-3 py-1 rounded-lg font-semibold hover:bg-red-400 transition-all"
                     onClick={() => {
                       setInvId(inv.id);
                       setDeleteModal(true);
