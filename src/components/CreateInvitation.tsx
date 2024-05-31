@@ -13,14 +13,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { Input } from "./ui/input";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  invitationsApi,
-  useAddInvitationMutation,
-  useGetAllUserInvitationQuery,
-} from "../redux/api/invitationAPI";
+import { useAddInvitationMutation } from "../redux/api/invitationAPI";
 import { Textarea } from "./ui/textarea";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { userApi } from "../redux/api/userAPI";
+import { useAppSelector } from "../redux/hooks";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -30,7 +25,6 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function CreateInvitation() {
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const [stateError, setStateError] = useState("");
   const [open, setOpen] = useState(false);

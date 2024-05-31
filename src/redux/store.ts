@@ -1,7 +1,6 @@
 import React from "react";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import {
-  persistStore,
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -10,7 +9,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import userSlice from "./features/userSlice";

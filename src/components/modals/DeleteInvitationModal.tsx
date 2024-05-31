@@ -10,7 +10,6 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "react-toastify";
 import { useDeleteInvitationMutation } from "../../redux/api/invitationAPI";

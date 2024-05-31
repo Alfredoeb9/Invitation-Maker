@@ -14,11 +14,7 @@ import { z } from "zod";
 import { useLoginMutation } from "../redux/api/userAPI";
 import { Spinner } from "../assets/svg/Spinner";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import {
-  isUserLoggedIn,
-  userLogin,
-  userLogout,
-} from "../redux/features/userSlice";
+import { isUserLoggedIn, userLogin } from "../redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({

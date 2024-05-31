@@ -11,15 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../components/ui/dialog";
 import { Link } from "react-router-dom";
 import DeleteInvitationModal from "../components/modals/DeleteInvitationModal";
 
@@ -31,11 +22,6 @@ export default function Home() {
     user.token ?? skipToken,
     { refetchOnMountOrArgChange: true }
   );
-
-  // if (deleteModal) {
-  //   // console.log("de", deleteModal);
-  //   <DeleteInvitationModal />;
-  // }
 
   return (
     <main className="container">
