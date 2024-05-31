@@ -145,7 +145,7 @@ export default function CreateInvitation() {
             />
           </form>
         </Form>
-        <DialogFooter>
+        <DialogFooter className="flex-col">
           <button
             onClick={() => {
               setOpen(false);
