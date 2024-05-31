@@ -76,7 +76,6 @@ export default function DeleteInvitationModal({
             </p>
             <Input
               id="name"
-              defaultValue=""
               className="col-span-3"
               value={deleteInvId}
               onChange={(e) => setDeleteInvId(e.currentTarget.value)}
