@@ -85,7 +85,7 @@ export default function DeleteInvitationModal({
         <DialogFooter className="flex-row justify-end gap-2">
           <Button
             type="submit"
-            className="bg-red-500 hover:bg-red-600"
+            className="bg-red-500 hover:bg-red-600 transition-all"
             disabled={!deleteInvId || isLoading}
             onClick={() => handleDeleteInvitation(invitationId)}
           >

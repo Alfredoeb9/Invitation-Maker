@@ -61,12 +61,12 @@ export default function Home() {
                 <CardFooter className="justify-end gap-2">
                   <Link
                     to={`/invitation/${inv.id}`}
-                    className="bg-slate-300 px-3 py-1 rounded-lg font-semibold hover:bg-slate-400 transition-all"
+                    className="bg-slate-300 px-3 py-1 rounded-lg font-semibold hover:bg-slate-400 hover:scale-[1.02] transition-all"
                   >
                     Edit
                   </Link>
                   <button
-                    className="bg-red-300 px-3 py-1 rounded-lg font-semibold hover:bg-red-400 transition-all"
+                    className="bg-red-300 px-3 py-1 rounded-lg font-semibold hover:bg-red-400 hover:scale-[1.02] transition-all"
                     onClick={() => {
                       setInvId(inv.id);
                       setDeleteModal(true);
