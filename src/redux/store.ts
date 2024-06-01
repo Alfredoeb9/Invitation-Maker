@@ -1,5 +1,5 @@
 import React from "react";
-import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import { UnknownAction, combineSlices, configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
   FLUSH,
@@ -14,20 +14,33 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import userSlice from "./features/userSlice";
 import { userApi } from "./api/userAPI";
 import { invitationsApi } from "./api/invitationAPI";
+import { invitationSlice } from "./features/invitationSlice";
 
 const persistAuthConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: [invitationsApi.reducerPath, invitationSlice.reducerPath],
 };
 
-const rootReducer = combineSlices(userSlice, userApi, invitationsApi);
+const rootReducer = combineSlices(
+  userSlice,
+  invitationSlice,
+  userApi,
+  invitationsApi
+);
 
-const persistedReducer = persistReducer(persistAuthConfig, rootReducer);
+const appReducer = (state: any, action: any) => {
+  if (action.type === "RESET") {
+    return rootReducer(undefined, action);
+  }
+
+  return rootReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistAuthConfig, appReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
-
-const initialState = {};
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({

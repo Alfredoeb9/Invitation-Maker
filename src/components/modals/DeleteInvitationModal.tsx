@@ -13,6 +13,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { toast } from "react-toastify";
 import { useDeleteInvitationMutation } from "../../redux/api/invitationAPI";
+import { useAppDispatch } from "../../redux/hooks";
+import { removeInvitation } from "../../redux/features/invitationSlice";
 
 interface DeleteInvitationTypes {
   token: string;
@@ -27,6 +29,7 @@ export default function DeleteInvitationModal({
   setDeleteModal,
   deleteModal,
 }: DeleteInvitationTypes) {
+  const dispatch = useAppDispatch();
   const [deleteInvId, setDeleteInvId] = useState<string>("");
   const [deleteInvitation, { isLoading }] = useDeleteInvitationMutation();
 
@@ -35,6 +38,7 @@ export default function DeleteInvitationModal({
       const newValues = { values, id: token };
       await deleteInvitation(newValues).then(() => {
         setDeleteModal(false);
+        dispatch(removeInvitation(values));
         toast(`Invitation has been deleted`, {
           position: "bottom-right",
           autoClose: 3500,

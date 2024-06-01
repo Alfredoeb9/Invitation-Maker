@@ -15,7 +15,9 @@ import { Input } from "./ui/input";
 import { ToastContainer, toast } from "react-toastify";
 import { useAddInvitationMutation } from "../redux/api/invitationAPI";
 import { Textarea } from "./ui/textarea";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { addInvitations } from "../redux/features/invitationSlice";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -25,6 +27,7 @@ const formSchema = z.object({
 type formSchemaType = z.infer<typeof formSchema>;
 
 export default function CreateInvitation() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const [stateError, setStateError] = useState("");
   const [open, setOpen] = useState(false);
@@ -48,10 +51,9 @@ export default function CreateInvitation() {
         email: user.email,
         userId: user.id,
       };
-      // @ts-expect-error newValues is present at this level
-      await createInvitation(newValues, { skipToken: !newValues })
+      await createInvitation(newValues ?? skipToken)
         .unwrap()
-        .then(() => {
+        .then((data) => {
           toast("Invitation created, cheers! 🥳", {
             position: "bottom-right",
             autoClose: 3500,
@@ -61,7 +63,7 @@ export default function CreateInvitation() {
             draggable: false,
             type: "success",
           });
-          // dispatch(invitationsApi.util.resetApiState());
+          dispatch(addInvitations(data));
           setOpen(false);
         })
         .catch((error) => {

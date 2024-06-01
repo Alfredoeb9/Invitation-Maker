@@ -1,5 +1,6 @@
 import React from "react";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState, store } from "../store";
 
 export const invitationsApi = createApi({
   reducerPath: "invitationApi",
@@ -39,6 +40,17 @@ export const invitationsApi = createApi({
       //     : ["invitations"],
       providesTags: () => ["invitations"],
     }),
+    getSingleInvitation: builder.query({
+      query: (payload) => ({
+        url: `/inv/${payload.id}`,
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: payload.token,
+        },
+      }),
+      providesTags: () => ["invitations"],
+    }),
     deleteInvitation: builder.mutation({
       query: (payload) => ({
         url: `/inv/${payload.values}`,
@@ -58,5 +70,6 @@ export const invitationsApi = createApi({
 export const {
   useAddInvitationMutation,
   useGetAllUserInvitationQuery,
+  useGetSingleInvitationQuery,
   useDeleteInvitationMutation,
 } = invitationsApi;

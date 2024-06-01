@@ -10,6 +10,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useAppDispatch } from "../redux/hooks";
 import { userLogout } from "../redux/features/userSlice";
+import { makeStore, store } from "../redux/store";
 
 export default function UserButton() {
   const dispatch = useAppDispatch();
@@ -30,7 +31,12 @@ export default function UserButton() {
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => dispatch(userLogout())}>
+          <DropdownMenuItem
+            onClick={() => {
+              dispatch(userLogout());
+              dispatch({ type: "REST" });
+            }}
+          >
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>

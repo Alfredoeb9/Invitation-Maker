@@ -1,7 +1,7 @@
-import React, { Key, useState } from "react";
+import React, { Key, useEffect, useState } from "react";
 import CreateInvitation from "../components/CreateInvitation";
 import { useGetAllUserInvitationQuery } from "../redux/api/invitationAPI";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { skipToken } from "@reduxjs/toolkit/query";
 import {
   Card,
@@ -13,15 +13,24 @@ import {
 } from "../components/ui/card";
 import { Link } from "react-router-dom";
 import DeleteInvitationModal from "../components/modals/DeleteInvitationModal";
+import { populateInvitation } from "../redux/features/invitationSlice";
 
 export default function Home() {
+  const dispatch = useAppDispatch();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [invId, setInvId] = useState<string>("");
   const user = useAppSelector((state) => state.user);
+  // const invitations = useAppSelector((state) => state.invitation.invitations);
   const { data, isError, error, isSuccess } = useGetAllUserInvitationQuery(
     user.token ?? skipToken,
     { refetchOnMountOrArgChange: true }
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(populateInvitation(data.allInvitations));
+    }
+  }, [isSuccess]);
 
   return (
     <main className="container">
