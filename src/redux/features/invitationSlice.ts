@@ -2,7 +2,7 @@ import React from "react";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-interface InvitationStateTypes {
+export interface InvitationStateTypes {
   content: any[];
   createdBy: string;
   createdById: string;
