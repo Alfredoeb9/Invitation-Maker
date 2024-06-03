@@ -13,7 +13,9 @@ export type InvitationElement = {
     label: string;
   };
 
-  designerComponent: React.FC;
+  designerComponent: React.FC<{
+    elementInstance: InvitationElementsInstance;
+  }>;
   invitationComponent: React.FC;
   propertiesComponent: React.FC;
 };
