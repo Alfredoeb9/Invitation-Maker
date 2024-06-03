@@ -3,13 +3,21 @@ import PreviewDialogButton from "./PreviewDialogButton";
 import SaveInvitationButton from "./SaveInvitationButton";
 import PublishInvitationButton from "./PublishInvitation";
 import Designer from "./Designer";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import DragOverlayWrapper from "./DragOverlayWrapper";
 
 function InvitationBuilder({ invitationData }: any) {
   const data = invitationData?.data[0];
+
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 10, // 10px
+    },
+  });
+
+  const sensors = useSensors(mouseSensor);
   return (
-    <DndContext>
+    <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">
         <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
           <h2 className="truncate font-medium">
