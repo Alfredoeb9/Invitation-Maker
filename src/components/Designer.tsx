@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import DesignerSidebar from "./DesignerSidebar";
-import { DragEndEvent, useDndMonitor, useDroppable } from "@dnd-kit/core";
+import {
+  DragEndEvent,
+  useDndMonitor,
+  useDraggable,
+  useDroppable,
+} from "@dnd-kit/core";
 import { Trash2 } from "lucide-react";
 import { cn } from "./lib/utils";
 import {
@@ -102,10 +107,25 @@ function DesignerElementWrapper({
       isTopHalfDesignerElement: false,
     },
   });
+
+  const draggable = useDraggable({
+    id: element.id + "-drag-handler",
+    data: {
+      type: element.type,
+      elementId: element.id,
+      isDesignerElement: true,
+    },
+  });
+
+  if (draggable.isDragging) return null;
+
   const DesignerElement = InvitationElements[element.type].designerComponent;
 
   return (
     <div
+      ref={draggable.setNodeRef}
+      {...draggable.listeners}
+      {...draggable.attributes}
       className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => {
         setMouseIsOver(true);
@@ -140,9 +160,22 @@ function DesignerElementWrapper({
           </div>
         </>
       )}
-      <div className="flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none">
+
+      {topHalf.isOver && (
+        <div className="absolute top-0 w-full rounded-md h-[7px] bg-white rounded-b-none" />
+      )}
+      <div
+        className={cn(
+          "flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
+          mouseIsOver && "opacity-30"
+        )}
+      >
         <DesignerElement elementInstance={element} />
       </div>
+
+      {bottomHalf.isOver && (
+        <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-white rounded-t-none" />
+      )}
     </div>
   );
 }
