@@ -6,6 +6,7 @@ import ReduxProvider from "./components/providers/ReduxProviders";
 import { PersistGate } from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore";
 import { store } from "./redux/store";
+import DesignerContextProvider from "./components/context/DesignerContext";
 
 let persistor = persistStore(store);
 
@@ -16,7 +17,9 @@ root.render(
   <React.StrictMode>
     <ReduxProvider>
       <PersistGate persistor={persistor}>
-        <App />
+        <DesignerContextProvider>
+          <App />
+        </DesignerContextProvider>
       </PersistGate>
     </ReduxProvider>
   </React.StrictMode>
