@@ -3,19 +3,33 @@ import PreviewDialogButton from "./PreviewDialogButton";
 import SaveInvitationButton from "./SaveInvitationButton";
 import PublishInvitationButton from "./PublishInvitation";
 import Designer from "./Designer";
-import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import DragOverlayWrapper from "./DragOverlayWrapper";
 
 function InvitationBuilder({ invitationData }: any) {
   const data = invitationData?.data[0];
 
+  // using these should work on mobile devices
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // 10px
     },
   });
 
-  const sensors = useSensors(mouseSensor);
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 300, // 300 ms
+      tolerance: 5, // 5px
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, mouseSensor);
   return (
     <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">
