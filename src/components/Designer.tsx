@@ -50,7 +50,7 @@ export default function Designer() {
             droppable.isOver && "ring-2 ring-white"
           )}
         >
-          {!droppable.isOver && (
+          {!droppable.isOver && elements.length === 0 && (
             <p className="text-3xl text-muted-foreground flex flex-grow items-center font-bold">
               Drop here
             </p>
@@ -61,9 +61,27 @@ export default function Designer() {
               <div className="h-[120px] rounded-md bg-primary/20"></div>
             </div>
           )}
+
+          {elements.length > 0 && (
+            <div className="flex flex-col text-background w-full gap-2 p-4">
+              {elements.map((element) => (
+                <DesignerElementWrapper key={element.id} element={element} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <DesignerSidebar />
     </div>
   );
+}
+
+function DesignerElementWrapper({
+  element,
+}: {
+  element: InvitationElementsInstance;
+}) {
+  const DesignerElement = InvitationElements[element.type].designerComponent;
+
+  return <DesignerElement />;
 }
