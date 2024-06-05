@@ -11,6 +11,7 @@
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
     "@reduxjs/toolkit": "^2.2.5",
     "@types/node": "16.18.97",
     "@types/react": "18.3.3",

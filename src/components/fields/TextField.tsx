@@ -20,6 +20,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useDesigner from "../hooks/useDesigner";
+import { Switch } from "../ui/switch";
 
 const type: ElementsType = "TextField";
 
@@ -125,6 +126,74 @@ function PropertiesComponent({
                 The label of the field. <br /> It will be displayed above the
                 field
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="placeHolder"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>PlaceHolder</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="text-black"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") e.currentTarget.blur();
+                  }}
+                />
+              </FormControl>
+              <FormDescription>The placeholder of the field</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="helperText"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Helper Text</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="text-black"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") e.currentTarget.blur();
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                The helper text of the field. <br /> It will be displayed below
+                the field.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="required"
+          render={({ field }) => (
+            <FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+              <div className="space-y-0.5">
+                <FormLabel>Required</FormLabel>
+
+                <FormDescription>Mark to make field required.</FormDescription>
+              </div>
+
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+
               <FormMessage />
             </FormItem>
           )}

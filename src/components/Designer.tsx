@@ -34,17 +34,61 @@ export default function Designer() {
 
       if (!active || !over) return;
 
+      // First Scenario dropping over the designer
       const isDesignerButtonElement =
         active?.data?.current?.isDesignerButtonElement;
+      const isDroppingOverDesignerDropArea =
+        over.data?.current?.isDesignerDropArea;
 
-      if (isDesignerButtonElement) {
+      const droppingSidebarBtnOverDesignerDropArea =
+        isDesignerButtonElement && isDroppingOverDesignerDropArea;
+      if (droppingSidebarBtnOverDesignerDropArea) {
         const type = active?.data?.current?.type;
 
         const newElement = InvitationElements[type as ElementsType].construct(
           idGenerator()
         );
 
-        addElement(0, newElement);
+        addElement(elements.length, newElement);
+        return;
+      }
+
+      // Second Scenario dropping above element or below
+      console.log("over", over.data.current);
+      const isDroppingOverDesignerElementTopHalf =
+        over.data?.current?.isTopHalfDesignerElement;
+      const isDroppingOverDesignerElementBottomHalf =
+        over.data?.current?.isBottomHalfDesignerElement;
+
+      const isDroppingOverDesignerElement =
+        isDroppingOverDesignerElementTopHalf ||
+        isDroppingOverDesignerElementBottomHalf;
+
+      const droppingSidebarBtnOverDesignerElement =
+        isDesignerButtonElement && isDroppingOverDesignerElement;
+
+      if (droppingSidebarBtnOverDesignerElement) {
+        const type = active?.data?.current?.type;
+
+        const newElement = InvitationElements[type as ElementsType].construct(
+          idGenerator()
+        );
+
+        const overId = over.data?.current?.elementId;
+
+        const overElementIndex = elements.findIndex((el) => el.id === overId);
+        if (overElementIndex === -1) {
+          throw new Error("Element not found");
+        }
+
+        let indexForNewElement = overElementIndex; // Assuming hover over top-half
+
+        if (isDroppingOverDesignerElementBottomHalf) {
+          indexForNewElement = overElementIndex + 1;
+        }
+
+        addElement(indexForNewElement, newElement);
+        return;
       }
     },
   });
@@ -110,7 +154,7 @@ function DesignerElementWrapper({
     data: {
       type: element.type,
       elementId: element.id,
-      isTopHalfDesignerElement: false,
+      isBottomHalfDesignerElement: true,
     },
   });
 
