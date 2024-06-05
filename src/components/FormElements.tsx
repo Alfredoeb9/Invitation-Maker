@@ -17,7 +17,9 @@ export type InvitationElement = {
     elementInstance: InvitationElementsInstance;
   }>;
   invitationComponent: React.FC;
-  propertiesComponent: React.FC;
+  propertiesComponent: React.FC<{
+    elementInstance: InvitationElementsInstance;
+  }>;
 };
 
 export type InvitationElementsInstance = {
